@@ -15,14 +15,16 @@ jobs:
         run: python extract.py
 
   transform-job:
+    needs: extract-job
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
         uses: actions/checkout@v7
       - name: run python code
         run: python transform.py
-        
+
   load-job:
+    needs: transform-job
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
