@@ -1,4 +1,4 @@
-name: pipeline1
+name: ETL Pipeline
 
 on:
   push:
@@ -6,23 +6,26 @@ on:
       - main
 
 jobs:
-  run-python-code:
+  extract-job:
     runs-on: ubuntu-latest
-
     steps:
-      - name: checkout code 
-        uses: actions/checkout@v7 
-      
-      - name: print python version
-        run: python --version
-      
-      - name: set up python version
-        uses: actions/setup-python@v7
-        with:
-          python-version: '3.13' 
-      
-      - name: print python version
-        run: python --version
+      - name: checkout code
+        uses: actions/checkout@v7
+      - name: run python code
+        run: python extract.py
 
-      - name: run python program
-        run: python welcome.py
+  transform-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v7
+      - name: run python code
+        run: python transform.py
+        
+  load-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v7
+      - name: run python code
+        run: python load.py
